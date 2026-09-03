@@ -59,7 +59,7 @@ El administrador podrá gestionar los principales elementos del sistema:
 
 ---
 
-## 🏪 Comerciantes
+## Comerciantes
 
 Los comerciantes podrán:
 
@@ -72,7 +72,7 @@ Los comerciantes podrán:
 
 ---
 
-## 🚴 Repartidores
+## Repartidores
 
 La interfaz para repartidores estará adaptada principalmente para dispositivos móviles.
 
@@ -89,41 +89,9 @@ Permitirá:
 
 ---
 
-# 🌱 Sistema de tarifa ecológica
+# Sistema de tarifa ecológica
 
 Una de las características principales de EcoRuta es la incorporación de criterios ambientales en el cálculo de las entregas.
-
-El sistema puede considerar diferentes variables:
-
-```text
-                    ┌──────────────────┐
-                    │  Datos del      │
-                    │     pedido      │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │    Distancia     │
-                    │    recorrida     │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Medio de         │
-                    │ transporte       │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Impacto          │
-                    │ ambiental        │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Tarifa ecológica │
-                    └──────────────────┘
-```
 
 Entre los factores que pueden ser considerados se encuentran:
 
@@ -136,101 +104,7 @@ Entre los factores que pueden ser considerados se encuentran:
 
 ---
 
-# 🔄 Flujo general
-
-```text
-┌──────────────┐
-│ Comerciante  │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────────┐
-│ Registrar pedido │
-└────────┬─────────┘
-         │
-         ▼
-┌─────────────────────┐
-│ Calcular tarifa     │
-│ ecológica           │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Asignar repartidor  │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Planificar ruta     │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Repartidor realiza  │
-│ la entrega          │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Actualizar estado   │
-└─────────┬───────────┘
-          │
-          ▼
-┌─────────────────────┐
-│ Pedido entregado    │
-└─────────────────────┘
-```
-
----
-
-# 📦 Estados de los pedidos
-
-|         Estado        | Descripción                                         |
-| :-------------------: | --------------------------------------------------- |
-|    🟡 **Pendiente**   | Pedido registrado esperando procesamiento.          |
-|    🔵 **Asignado**    | Se asignó un repartidor al pedido.                  |
-| 🟣 **En preparación** | El pedido está siendo preparado por el comerciante. |
-|    🟠 **En camino**   | El repartidor inició el recorrido.                  |
-|    🟢 **Entregado**   | El pedido fue entregado correctamente.              |
-|    🔴 **Cancelado**   | El pedido fue cancelado.                            |
-
----
-
-# 🏗️ Arquitectura
-
-EcoRuta sigue una arquitectura organizada por responsabilidades, separando la interfaz, lógica de negocio, acceso a datos y recursos del sistema.
-
-```text
-                         ECO-RUTA
-                            │
-             ┌──────────────┴──────────────┐
-             │                             │
-             ▼                             ▼
-       PANEL WEB                    INTERFAZ MÓVIL
-    Administradores                 Repartidores
-    Comerciantes
-             │                             │
-             └──────────────┬──────────────┘
-                            │
-                            ▼
-                     CAPA DE APLICACIÓN
-                            │
-                 ┌──────────┴──────────┐
-                 │                     │
-                 ▼                     ▼
-             Lógica                 API /
-            de negocio          procesamiento
-                 │                     │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                       BASE DE DATOS
-                      MySQL / MariaDB
-```
-
----
-
-# 🛠️ Tecnologías
+# Tecnologías
 
 ### Frontend
 
@@ -253,7 +127,6 @@ EcoRuta sigue una arquitectura organizada por responsabilidades, separando la in
 | Tecnología | Uso                    |
 | ---------- | ---------------------- |
 | MySQL      | Gestión de datos       |
-| MariaDB    | Alternativa compatible |
 
 ### Herramientas
 
@@ -264,8 +137,8 @@ EcoRuta sigue una arquitectura organizada por responsabilidades, separando la in
 * phpMyAdmin
 
 ---
-
-# 📁 Estructura del proyecto
+<!--
+# Estructura del proyecto
 
 ```text
 eco-ruta/
@@ -310,13 +183,13 @@ eco-ruta/
 ```
 
 ---
-
-# 💻 Requisitos
+-->
+# Requisitos
 
 Para ejecutar EcoRuta localmente se necesita:
 
 * PHP 8.x o superior.
-* MySQL o MariaDB.
+* MySQL.
 * Apache.
 * Navegador web actualizado.
 * Git.
@@ -324,7 +197,7 @@ Para ejecutar EcoRuta localmente se necesita:
 
 ---
 
-# 🚀 Instalación
+# Instalación
 
 ## 1. Clonar el repositorio
 
@@ -350,11 +223,11 @@ C:\xampp\htdocs\eco-ruta
 
 Desde **phpMyAdmin** o MySQL:
 
-1. Crear una base de datos llamada `ecoruta`.
+1. Crear una base de datos llamada `ecoruta_db`.
 2. Importar el archivo:
 
 ```text
-database/ecoruta.sql
+database/ecoruta_db.sql
 ```
 
 ## 5. Configurar la conexión
@@ -362,7 +235,7 @@ database/ecoruta.sql
 Editar:
 
 ```text
-config/database.php
+servicios/conexion.php
 ```
 
 Ejemplo:
@@ -371,7 +244,7 @@ Ejemplo:
 <?php
 
 $host = "localhost";
-$database = "ecoruta";
+$database = "ecoruta_db";
 $user = "root";
 $password = "";
 
@@ -403,7 +276,7 @@ http://localhost/eco-ruta/
 ```
 
 ---
-
+<!--
 # 🔐 Seguridad
 
 El sistema contempla la utilización de diferentes roles para controlar el acceso a las funcionalidades.
@@ -426,10 +299,9 @@ El sistema contempla la utilización de diferentes roles para controlar el acces
 ```
 
 Cada rol tendrá acceso únicamente a las funcionalidades correspondientes a sus responsabilidades dentro del sistema.
-
----
-
-# 📊 Indicadores ambientales
+-->
+<!-- 
+# Indicadores ambientales
 
 EcoRuta puede utilizar la información generada por las entregas para construir indicadores como:
 
@@ -472,8 +344,8 @@ La aplicación está pensada para adaptarse a diferentes dispositivos:
 El panel administrativo está orientado principalmente a computadoras, mientras que la interfaz de los repartidores prioriza la utilización desde smartphones.
 
 ---
-
-# 🗺️ Futuras funcionalidades
+-->
+# Futuras funcionalidades
 
 El proyecto contempla la incorporación progresiva de nuevas funcionalidades:
 
@@ -498,39 +370,15 @@ El proyecto contempla la incorporación progresiva de nuevas funcionalidades:
 
 ---
 
-# 📌 Estado del proyecto
+# Estado del proyecto
 
-🚧 **EcoRuta se encuentra actualmente en desarrollo.**
+ **EcoRuta se encuentra actualmente en desarrollo.**
 
 El proyecto está siendo desarrollado de forma progresiva, incorporando primero las funcionalidades principales de administración de pedidos y posteriormente las herramientas relacionadas con rutas, repartición e indicadores ecológicos.
 
 ---
 
-# 🤝 Contribuciones
-
-Las contribuciones, sugerencias y mejoras son bienvenidas.
-
-Para contribuir:
-
-```bash
-# Crear una nueva rama
-git checkout -b feature/nueva-funcionalidad
-
-# Agregar cambios
-git add .
-
-# Crear commit
-git commit -m "feat: agrega nueva funcionalidad"
-
-# Subir la rama
-git push origin feature/nueva-funcionalidad
-```
-
-Posteriormente se puede crear un **Pull Request** para revisar e integrar los cambios.
-
----
-
-# 📄 Licencia
+# Licencia
 
 Este proyecto se encuentra actualmente en desarrollo con fines **académicos y educativos**.
 
@@ -538,7 +386,7 @@ La licencia definitiva del proyecto será establecida posteriormente.
 
 ---
 
-# 👨‍💻 Autor
+# Autor
 
 **EJ642**
 
@@ -550,10 +398,8 @@ Sistema web para la administración y distribución ecológica de pedidos.
 
 <p align="center">
 
-🌱 **EcoRuta**
+**EcoRuta**
 
 **Tecnología para una distribución más eficiente y sostenible.**
-
-📦 🚴 🗺️ 🌎
 
 </p>
