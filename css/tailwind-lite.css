@@ -1,0 +1,65 @@
+/* Minimal, local Tailwind-like utilities used by the login form
+   This avoids external CDN blocking and provides approximate styling.
+*/
+:root{--indigo-500:#6366f1;--indigo-600:#4f46e5;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-500:#6b7280}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.4;background:var(--gray-100);display:flex;align-items:center;justify-content:center;padding:1rem}
+.BKG{
+    background-image: url('../img/login-bk.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+.bg-white{background:#fff}
+.bg-black{background:#000}
+.rounded-lg{border-radius:.5rem}
+.rounded-md{border-radius:.375rem}
+.shadow-xl{box-shadow:0 10px 15px rgba(0,0,0,.08)}
+.text-sm{font-size:.875rem}
+.text-gray-500{color:var(--gray-500)}
+.text-black{color:#000}
+.border{border:1px solid var(--gray-200)}
+.border-gray-200{border-color:var(--gray-200)}
+.p-8{padding:2rem}
+.py-12{padding-top:3rem;padding-bottom:3rem}
+.w-80{width:20rem}
+.text-2xl{font-size:1.5rem}
+.font-medium{font-weight:500}
+.text-center{text-align:center}
+.text-indigo-500{color:var(--indigo-500)}
+.text-red-500{color:var(--red-500)}
+.mt-4{margin-top:1rem}
+.mt-1{margin-top:.25rem}
+.block{display:block}
+.w-full{width:100%}
+.p-2{padding:.5rem}
+input,button,textarea{font:inherit}
+input{border:1px solid var(--gray-200);padding:.5rem;border-radius:.375rem}
+.outline-indigo-500:focus{box-shadow:0 0 0 3px rgba(99,102,241,.15);outline:none}
+.bg-indigo-500{background:var(--indigo-500)}
+.hover\:bg-indigo-600:hover{background:var(--indigo-600)}
+.transition-all{transition:all .18s ease}
+.text-white{color:#fff}
+.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.cursor-pointer{cursor:pointer}
+
+/* additional utilities needed by the login form button */
+.rounded-full{border-radius:9999px}
+.px-8{padding-left:2rem;padding-right:2rem}
+.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}
+.p-0\.5{padding:.125rem}
+.hover\:scale-105:hover{transform:scale(1.05)}
+.active\:scale-100:active{transform:scale(1)}
+.duration-300{transition-duration:.3s}
+.transform{transform:translateZ(0)}
+
+
+
+@media (min-width:640px){
+  .sm\:w-\[352px\]{width:352px}
+}
+
+.form-wrap{max-width:100%}
