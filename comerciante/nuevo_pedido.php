@@ -28,6 +28,8 @@ include __DIR__ . '/../includes/header.php';
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet Routing Machine (calcula la ruta real por calles usando OSRM) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
 
 <style>
     .order-page-header {
@@ -102,6 +104,11 @@ include __DIR__ . '/../includes/header.php';
         border-radius: 12px;
         border: 1px solid #dce5d8;
         z-index: 1;
+    }
+    /* Oculta el panel de instrucciones paso a paso de Leaflet Routing Machine;
+       solo necesitamos la línea de ruta calculada sobre las calles. */
+    .leaflet-routing-container {
+        display: none !important;
     }
     .quote-box {
         background: linear-gradient(145deg, #16724d, #0e5036);
@@ -320,6 +327,8 @@ include __DIR__ . '/../includes/header.php';
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Leaflet Routing Machine: calcula la ruta siguiendo las calles (OSRM), no línea recta -->
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -355,51 +364,87 @@ document.addEventListener('DOMContentLoaded', function() {
         shadowSize: [41, 41]
     });
 
-    var markerOrigen = L.marker([latOrigen, lngOrigen], { draggable: true, icon: origenIcon }).addTo(map)
-        .bindPopup("<b>🏬 Origen (Comercio)</b>");
+    // Servidores públicos de ruteo OSRM (demo de FOSSGIS) según el tipo de vehículo.
+    // Calculan la ruta real siguiendo las calles del mapa, no una línea recta.
+    // Nota: es un servicio de demostración de uso libre pero limitado (no apto para
+    // tráfico alto de producción). Para producción se recomienda un OSRM propio o
+    // un proveedor pago (OpenRouteService, Mapbox, Google Directions, etc.).
+    var perfilesRuteo = {
+        bicicleta: {
+            serviceUrl: 'https://routing.openstreetmap.de/routed-bike/route/v1',
+            profile: 'bike'
+        },
+        // OSRM no tiene un perfil específico de "vehículo eléctrico"; se usa el
+        // perfil de auto/conducción como aproximación más cercana.
+        vehiculo_electrico: {
+            serviceUrl: 'https://routing.openstreetmap.de/routed-car/route/v1',
+            profile: 'driving'
+        }
+    };
 
-    var markerDestino = L.marker([latDestino, lngDestino], { draggable: true, icon: destinoIcon }).addTo(map)
-        .bindPopup("<b>📍 Destino (Cliente)</b>");
-
-    var polyline = L.polyline([[latOrigen, lngOrigen], [latDestino, lngDestino]], { color: '#16724d', weight: 4, dashArray: '8, 8' }).addTo(map);
-
-    // Fórmula Haversine para calcular distancia en km entre dos coordenadas
-    function calcularDistancia(lat1, lon1, lat2, lon2) {
-        var R = 6371; // Radio de la tierra en km
-        var dLat = (lat2 - lat1) * Math.PI / 180;
-        var dLon = (lon2 - lon1) * Math.PI / 180;
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
+    function crearRouter(tipoVehiculo) {
+        var perfil = perfilesRuteo[tipoVehiculo] || perfilesRuteo.bicicleta;
+        return L.Routing.osrmv1({
+            serviceUrl: perfil.serviceUrl,
+            profile: perfil.profile
+        });
     }
 
-    function actualizarRutaYDistancia() {
-        var posO = markerOrigen.getLatLng();
-        var posD = markerDestino.getLatLng();
+    var routingControl = null;
 
-        document.getElementById('latitud_origen').value = posO.lat.toFixed(7);
-        document.getElementById('longitud_origen').value = posO.lng.toFixed(7);
-        document.getElementById('latitud_destino').value = posD.lat.toFixed(7);
-        document.getElementById('longitud_destino').value = posD.lng.toFixed(7);
-
-        polyline.setLatLngs([posO, posD]);
-
-        var distKm = calcularDistancia(posO.lat, posO.lng, posD.lat, posD.lng);
-        // Factor de ruta vial aproximada (1.3x de línea recta)
-        var distEstimada = Math.max(0.5, Math.round(distKm * 1.25 * 10) / 10);
-        document.getElementById('distancia_km').value = distEstimada;
-
-        actualizarCotizacion();
+    function actualizarCamposDesdeWaypoints() {
+        if (!routingControl) return;
+        var wps = routingControl.getWaypoints();
+        if (!wps[0].latLng || !wps[1].latLng) return;
+        document.getElementById('latitud_origen').value = wps[0].latLng.lat.toFixed(7);
+        document.getElementById('longitud_origen').value = wps[0].latLng.lng.toFixed(7);
+        document.getElementById('latitud_destino').value = wps[1].latLng.lat.toFixed(7);
+        document.getElementById('longitud_destino').value = wps[1].latLng.lng.toFixed(7);
     }
 
-    markerOrigen.on('dragend', actualizarRutaYDistancia);
-    markerDestino.on('dragend', actualizarRutaYDistancia);
+    // Crea (o recrea, al cambiar de vehículo) el control de ruteo por calles
+    function iniciarRuteo(waypoints, tipoVehiculo) {
+        if (routingControl) {
+            map.removeControl(routingControl);
+        }
+
+        routingControl = L.Routing.control({
+            waypoints: waypoints,
+            router: crearRouter(tipoVehiculo),
+            routeWhileDragging: true,
+            addWaypoints: false,
+            fitSelectedRoutes: false,
+            show: false,
+            lineOptions: {
+                styles: [{ color: '#16724d', weight: 5 }]
+            },
+            createMarker: function(i, waypoint) {
+                var icon = i === 0 ? origenIcon : destinoIcon;
+                var popup = i === 0 ? '<b>🏬 Origen (Comercio)</b>' : '<b>📍 Destino (Cliente)</b>';
+                return L.marker(waypoint.latLng, { draggable: true, icon: icon }).bindPopup(popup);
+            }
+        }).addTo(map);
+
+        // Cuando OSRM devuelve la ruta calculada por calles, usamos la distancia
+        // real de esa ruta (no la línea recta) para la cotización.
+        routingControl.on('routesfound', function(e) {
+            var ruta = e.routes[0];
+            var distanciaKm = Math.max(0.1, Math.round((ruta.summary.totalDistance / 1000) * 10) / 10);
+            document.getElementById('distancia_km').value = distanciaKm;
+            actualizarCamposDesdeWaypoints();
+            actualizarCotizacion();
+        });
+
+        routingControl.on('routingerror', function() {
+            alertify.error('No se pudo calcular la ruta por calles entre esas direcciones.');
+        });
+    }
+
+    iniciarRuteo([L.latLng(latOrigen, lngOrigen), L.latLng(latDestino, lngDestino)], document.getElementById('tipo_vehiculo_input').value || 'bicicleta');
 
     map.on('click', function(e) {
-        markerDestino.setLatLng(e.latlng);
-        actualizarRutaYDistancia();
+        var wps = routingControl.getWaypoints();
+        routingControl.setWaypoints([wps[0].latLng, e.latlng]);
     });
 
     // 3. Selección de Vehículo
@@ -410,7 +455,10 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
             var vehiculo = this.getAttribute('data-vehicle');
             document.getElementById('tipo_vehiculo_input').value = vehiculo;
-            actualizarCotizacion();
+
+            // Recalcular la ruta por calles con el perfil correspondiente al vehículo
+            var wps = routingControl.getWaypoints().map(function(w) { return w.latLng; });
+            iniciarRuteo(wps, vehiculo);
         });
     });
 
