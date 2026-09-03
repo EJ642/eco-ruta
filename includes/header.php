@@ -25,12 +25,12 @@ $usuarioEmail = htmlspecialchars($_SESSION['usuario_email'] ?? '', ENT_QUOTES, '
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EcoRuta · Logística Sostenible</title>
 
-    <!-- Bootstrap 5, Bootstrap Icons & Alertify (100% Local) -->
-    <link rel="stylesheet" href="<?php echo $basePath; ?>bt/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo $basePath; ?>bt-icons/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="<?php echo $basePath; ?>alertify/alertify.min.css">
-    <link rel="stylesheet" href="<?php echo $basePath; ?>alertify/themes/default.min.css">
-    <link rel="stylesheet" href="<?php echo $basePath; ?>css/styles.css">
+    <!-- Bootstrap 5, Bootstrap Icons & Alertify -->
+    <link rel="stylesheet" href="/eco-ruta/bt-icons/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/eco-ruta/alertify/alertify.min.css">
+    <link rel="stylesheet" href="/eco-ruta/alertify/themes/default.min.css">
+    <link rel="stylesheet" href="/eco-ruta/css/styles.css">
+    <link rel="stylesheet" href="/eco-ruta/bt/bootstrap.min.css">
 </head>
 <body class="eco-admin-body">
     <div class="eco-admin-shell">

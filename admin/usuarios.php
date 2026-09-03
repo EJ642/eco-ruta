@@ -21,7 +21,7 @@ include __DIR__ . '/../includes/header.php';
     var ID_USUARIO_SESION = <?php echo (int) ($_SESSION['usuario_id'] ?? 0); ?>;
 </script>
 
-<link rel="stylesheet" href="<?php echo $ruta; ?>dt/dataTables.bootstrap5.min.css"/>
+<link rel="stylesheet" href="/eco-ruta/dt/dataTables.bootstrap5.min.css"/>
 
 <!-- ENCABEZADO -->
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
@@ -423,21 +423,21 @@ include __DIR__ . '/../includes/header.php';
 <?php include __DIR__ . '/../includes/footer.php'; ?>
 
 <!-- DataTables -->
-<script src="<?php echo $ruta; ?>dt/jquery-3.7.0.js"></script>
-<script src="<?php echo $ruta; ?>dt/jquery.dataTables.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/dataTables.bootstrap5.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/jszip.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/pdfmake.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/vfs_fonts.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/dataTables.buttons.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/buttons.bootstrap5.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/buttons.html5.min.js"></script>
-<script src="<?php echo $ruta; ?>dt/botones/buttons.print.min.js"></script>
+<script src="/eco-ruta/dt/jquery-3.7.0.js"></script>
+<script src="/eco-ruta/dt/jquery.dataTables.min.js"></script>
+<script src="/eco-ruta/dt/dataTables.bootstrap5.min.js"></script>
+<script src="/eco-ruta/dt/botones/jszip.min.js"></script>
+<script src="/eco-ruta/dt/botones/pdfmake.min.js"></script>
+<script src="/eco-ruta/dt/botones/vfs_fonts.js"></script>
+<script src="/eco-ruta/dt/botones/dataTables.buttons.min.js"></script>
+<script src="/eco-ruta/dt/botones/buttons.bootstrap5.min.js"></script>
+<script src="/eco-ruta/dt/botones/buttons.html5.min.js"></script>
+<script src="/eco-ruta/dt/botones/buttons.print.min.js"></script>
 
 <script>
 $(document).ready(function () {
     var dtConfig = {
-        language: { url: "<?php echo $ruta; ?>dt/es-ES.json" },
+        language: { url: "/eco-ruta/dt/es-ES.json" },
         responsive: true,
         dom: 'Bfrtip',
         pageLength: 10,

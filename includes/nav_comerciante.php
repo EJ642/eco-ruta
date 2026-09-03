@@ -19,21 +19,21 @@ $paginaActual = basename($_SERVER['PHP_SELF'] ?? '');
         <div class="menu-section-title">Operaciones</div>
 
         <div class="menu-item <?php echo $paginaActual === 'dashboard.php' ? 'active' : ''; ?>">
-            <a href="<?php echo $ruta; ?>comerciante/dashboard.php" class="menu-link" title="Inicio">
+            <a href="/eco-ruta/comerciante/dashboard.php" class="menu-link" title="Inicio">
                 <span class="menu-icon"><i class="bi bi-grid-1x2-fill"></i></span>
                 <span class="menu-text">Mi Resumen</span>
             </a>
         </div>
 
         <div class="menu-item <?php echo $paginaActual === 'nuevo_pedido.php' ? 'active' : ''; ?>">
-            <a href="<?php echo $ruta; ?>comerciante/nuevo_pedido.php" class="menu-link" title="Nueva Entrega">
+            <a href="/eco-ruta/comerciante/nuevo_pedido.php" class="menu-link" title="Nueva Entrega">
                 <span class="menu-icon"><i class="bi bi-plus-circle-fill"></i></span>
                 <span class="menu-text">Nueva Entrega</span>
             </a>
         </div>
 
         <div class="menu-item <?php echo $paginaActual === 'pedidos.php' ? 'active' : ''; ?>">
-            <a href="<?php echo $ruta; ?>comerciante/pedidos.php" class="menu-link" title="Mis Pedidos">
+            <a href="/eco-ruta/comerciante/pedidos.php" class="menu-link" title="Mis Pedidos">
                 <span class="menu-icon"><i class="bi bi-box-seam-fill"></i></span>
                 <span class="menu-text">Mis Pedidos</span>
             </a>

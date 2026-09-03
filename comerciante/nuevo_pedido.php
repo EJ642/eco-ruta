@@ -276,7 +276,7 @@ include __DIR__ . '/../includes/header.php';
                 <div class="section-title">
                     <i class="bi bi-map text-primary"></i> Mapa Interactivo GPS
                 </div>
-                <p class="small text-muted mb-2">Haz clic en el mapa para posicionar el <strong>Destino (Punto Azul)</strong> o arrastra los marcadores.</p>
+                <p class="small text-muted mb-2">Haz clic en el mapa para posicionar el <strong>Destino (Punto Verde)</strong> o arrastra los marcadores.</p>
                 <div id="map"></div>
             </div>
 

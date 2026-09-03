@@ -19,7 +19,7 @@ $paginaActual = basename($_SERVER['PHP_SELF'] ?? '');
         <div class="menu-section-title">Panel Principal</div>
 
         <div class="menu-item <?php echo $paginaActual === 'dashboard.php' ? 'active' : ''; ?>">
-            <a href="<?php echo $ruta; ?>admin/dashboard.php" class="menu-link" title="Inicio">
+            <a href="/eco-ruta/admin/dashboard.php" class="menu-link" title="Inicio">
                 <span class="menu-icon"><i class="bi bi-grid-1x2-fill"></i></span>
                 <span class="menu-text">Panel de Control</span>
             </a>
@@ -28,7 +28,7 @@ $paginaActual = basename($_SERVER['PHP_SELF'] ?? '');
         <div class="menu-section-title mt-3">Gestión</div>
 
         <div class="menu-item <?php echo $paginaActual === 'usuarios.php' ? 'active' : ''; ?>">
-            <a href="<?php echo $ruta; ?>admin/usuarios.php" class="menu-link" title="Gestión de Usuarios">
+            <a href="/eco-ruta/admin/usuarios.php" class="menu-link" title="Gestión de Usuarios">
                 <span class="menu-icon"><i class="bi bi-people-fill"></i></span>
                 <span class="menu-text">Usuarios y Cuentas</span>
             </a>

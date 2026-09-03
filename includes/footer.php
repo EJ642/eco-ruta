@@ -2,8 +2,8 @@
     </div><!-- /.page-content -->
 </div><!-- /.eco-admin-shell -->
 
-<script src="<?php echo $basePath ?? '/EcoRuta/'; ?>bt/bootstrap.bundle.min.js"></script>
-<script src="<?php echo $basePath ?? '/EcoRuta/'; ?>alertify/alertify.min.js"></script>
+<script src="/eco-ruta/bt/bootstrap.bundle.min.js"></script>
+<script src="/eco-ruta/alertify/alertify.min.js"></script>
 <script>
     const rolActual = <?php echo json_encode($_SESSION['rol'] ?? ''); ?>;
     const tokenActual = <?php echo json_encode($_SESSION['token'] ?? ''); ?>;
@@ -18,7 +18,7 @@
     function cerrarSesionExpirada() {
         alertify.error('Sesión expirada, inicie nuevamente');
         setTimeout(() => {
-            window.location.href = '/EcoRuta/index.php?error=sesion_expirada';
+            window.location.href = '/eco-ruta/index.php?error=sesion_expirada';
         }, 800);
     }
 
@@ -28,7 +28,7 @@
             return;
         }
 
-        fetch('/EcoRuta/refresh_token.php', {
+        fetch('/eco-ruta/refresh_token.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -112,7 +112,7 @@
             e.preventDefault();
             alertify.confirm('Cerrar sesión', '¿Está seguro que desea salir del sistema?',
                 function () {
-                    window.location.href = '/EcoRuta/salir.php';
+                    window.location.href = '/eco-ruta/salir.php';
                 },
                 function () {
                     alertify.error('Cancelado');

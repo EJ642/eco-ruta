@@ -386,9 +386,9 @@ La licencia definitiva del proyecto será establecida posteriormente.
 
 ---
 
-# Autor
+# Autores
 
-**EJ642**
+**Sergio Daniel Aquino, Álvaro Ortega, Elías Huerta, Thaiel Duarte y Paola Oviedo**
 
 Proyecto: **EcoRuta**
 

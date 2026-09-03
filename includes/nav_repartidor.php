@@ -19,7 +19,7 @@ $paginaActual = basename($_SERVER['PHP_SELF'] ?? '');
         <div class="menu-section-title">Reparto Verde</div>
 
         <div class="menu-item <?php echo $paginaActual === 'dashboard.php' ? 'active' : ''; ?>">
-            <a href="<?php echo $ruta; ?>repartidor/dashboard.php" class="menu-link" title="Mis Entregas">
+            <a href="/eco-ruta/repartidor/dashboard.php" class="menu-link" title="Mis Entregas">
                 <span class="menu-icon"><i class="bi bi-bicycle"></i></span>
                 <span class="menu-text">Mis Entregas</span>
             </a>
